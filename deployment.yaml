@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-catalog
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: book-catalog
+  template:
+    metadata:
+      labels:
+        app: book-catalog
+
+      spec:
+  imagePullSecrets:
+    - name: myregistrykey 
+  containers:
+     - name: book-catalog
+       image: /book_catalog:new
+       -ports:
+        - containerPort: 8001
+
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://Spandan:atgs41UAZ*rK@clouddevops.postgres.database.azure.com:5432/postgres"
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+          imagePullPolicy: Always
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-management
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: inventory-management
+  template:
+    metadata:
+      labels:
+        app: inventory-management
+    spec:
+  imagePullSecrets:
+  - name: myregistrykey  # Ensure this matches the name of the secret you created
+  containers:
+  - name: inventory-management
+    image: spandan11.azurecr.io/inventory_management:new
+    ports:
+        - containerPort: 8002
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
+            requests:
+              cpu: "500m"
+              memory: "256Mi"
+          imagePullPolicy: Always
+    

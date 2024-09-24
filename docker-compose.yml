@@ -1,1 +1,74 @@
-# Your Solution
+version: '3.8'
+
+services:
+  book_catalog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+
+  inventory_management:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: clouddevops
+      POSTGRES_USER: Spandan
+      POSTGRES_PASSWORD: atgs41UAZ*rK
+    ports:
+      - "5432:5432"
+
+
+
+# version: '3.8'
+# services:
+#   book_catalog:
+#     build:
+#       context: .
+#     ports:
+#       - "8001:8001"
+
+#   inventory_management:
+#     build:
+#       context: .
+#     ports:
+#       - "8002:8002"
+
+
+
+
+# # version: '3'
+# services:
+#   book_catalog:
+#     build:
+#       context: ./book_catalog
+#     ports:
+#       - "8001:8001"
+#     depends_on:
+#       - postgres
+#     environment:
+#       - DATABASE_URL=postgresql://Spandan:atgs41UAZ*rK@clouddevops.postgres.database.azure.com:5432/postgres
+
+#   inventory_management:
+#     build:
+#       context: ./inventory_management
+#     ports:
+#       - "8002:8002"
+#     depends_on:
+#       - postgres
+#     environment:
+#       - DATABASE_URL=postgresql://Spandan:atgs41UAZ*rK@clouddevops.postgres.database.azure.com:5432/postgres
+
+#   postgres:
+#     image: postgres:13
+#     environment:
+#       POSTGRES_USER: Spandan
+#       POSTGRES_PASSWORD: atgs41UAZ*rK
+#     ports:
+#       - "5432:5432"
